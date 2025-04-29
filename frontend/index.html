@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Steering Console</title>
+</head>
+<body>
+    <label for="slider1">Steering (-20deg to 20deg): </label>
+    <input type="range" id="slider1" min="-20" max="20" value="0" style="width: 20rem;">
+    <span id="slider1-value">0deg</span><br>
+
+    <label for="slider2">Motors (-100% to 100%): </label>
+    <input type="range" id="slider2" min="-100" max="100" value="0" style="width: 20rem;">
+    <span id="slider2-value">0%</span><br>
+
+    <iframe id="camera-feed" src="" scrolling="no" style="width: 1920px; height: 1080px;"></iframe>
+</body>
+<script>
+    const WEBSOCKET_ADDR = "ws://raspberrypi:8080";
+    const WEBRTC_CAMERA_ADDR = "http://raspberrypi:8889/rpi";
+
+    const socket = new WebSocket(WEBSOCKET_ADDR);
+
+    let gamepadHandlerInterval = null;
+    let isConnected = false;
+
+    const slider1 = document.getElementById("slider1");
+    const slider1Value = document.getElementById("slider1-value");
+
+    const slider2 = document.getElementById("slider2");
+    const slider2Value = document.getElementById("slider2-value");
+
+    const cameraFeed = document.getElementById("camera-feed");
+
+    function setSteering(value) {
+        if (!isConnected) return;
+
+        slider1.value = value;
+        slider1Value.textContent = slider1.value + 'deg';
+        socket.send("steer " + slider1.value);
+    }
+
+    function setMotors(value) {
+        if (!isConnected) return;
+
+        slider2.value = value;
+        slider2Value.textContent = slider2.value + '%';
+        socket.send("motors " + slider2.value);
+    }
+
+    function setIsConnected(value) {
+        isConnected = value;
+
+        slider1.disabled = !isConnected;
+        slider2.disabled = !isConnected;
+
+        if (isConnected) {
+            cameraFeed.src = WEBRTC_CAMERA_ADDR;
+        } else {
+            cameraFeed.src = "";
+        }
+    }
+
+    function gamepadHandler() {
+        const gamepads = navigator.getGamepads();
+        const gamepad = gamepads[0];
+
+        if (!gamepad) {
+            return;
+        }
+
+        const leftTrigger = gamepad.buttons[6].value;
+        const rightTrigger = gamepad.buttons[7].value;
+
+        const leftStickX = gamepad.axes[0];
+        const leftStickY = gamepad.axes[1];
+        const rightStickX = gamepad.axes[2];
+        const rightStickY = gamepad.axes[3];
+        
+        setSteering(leftStickX * 20.0);
+        setMotors((rightTrigger - leftTrigger) * 100.0);
+        //console.log("LStick: (" + leftStickX.toFixed(2) + ", " + leftStickY.toFixed(2) + "),\nRStick: (" + rightStickX.toFixed(2) + ", " + rightStickY.toFixed(2) + "),\nLTrigger: " + leftTrigger.toFixed(2) + ", RTrigger: " + rightTrigger.toFixed(2))
+    }
+    
+    setIsConnected(false);
+
+    slider1.addEventListener("input", function() {
+        setSteering(slider1.value)
+    });
+
+    slider2.addEventListener("input", function() {
+        setMotors(slider2.value);
+    });
+
+    socket.addEventListener("open", (event) => {
+        console.log("Connected to the robot");
+        setIsConnected(true);
+    });
+    socket.addEventListener("close", (event) => {
+        console.log("Disconnected from the robot");
+        setIsConnected(false);
+    });
+
+    socket.addEventListener("message", (event) => {
+        console.log("echo: ", event.data);
+    });
+
+    window.addEventListener("gamepadconnected", (e) => {
+        console.log(
+            "Gamepad %d: %s connected with %d buttons, %d axes",
+            e.gamepad.index,
+            e.gamepad.id,
+            e.gamepad.buttons.length,
+            e.gamepad.axes.length,
+        );
+
+        if (gamepadHandlerInterval == null) {
+            gamepadHandlerInterval = setInterval(gamepadHandler, 20);
+        }
+    });
+    window.addEventListener("gamepaddisconnected", (e) => {
+        console.log(
+            "Gamepad %d: %s disconnected",
+            e.gamepad.index,
+            e.gamepad.id,
+        );
+
+        if (navigator.getGamepads().length === 0) {
+            clearInterval(gamepadHandlerInterval);
+        
+            gamepadHandlerInterval = null;
+        }
+    });
+</script>
+</html>
