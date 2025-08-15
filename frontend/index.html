@@ -4,17 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Robot Steering Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <label for="slider1">Steering (-20deg to 20deg): </label>
-    <input type="range" id="slider1" min="-20" max="20" value="0" style="width: 20rem;">
-    <span id="slider1-value">0deg</span><br>
+    <div class="camera-container">
+        <iframe id="camera-feed" src="" scrolling="no" style="width: 1280px; height: 720px;"></iframe>
+    </div>
+    <div class="controller">
+        <div class="slider-container">
+            <label for="slider1">Steering (-30deg to 30deg): </label>
+            <input class="slider" type="range" id="slider1" min="-30" max="30" value="0" style="width: 20rem;">
+            <span id="slider1-value">0deg</span><br>
+        </div>
 
-    <label for="slider2">Motors (-100% to 100%): </label>
-    <input type="range" id="slider2" min="-100" max="100" value="0" style="width: 20rem;">
-    <span id="slider2-value">0%</span><br>
+        <div class="spacer"></div>
 
-    <iframe id="camera-feed" src="" scrolling="no" style="width: 1920px; height: 1080px;"></iframe>
+        <div class="slider-container">
+            <label for="slider2">Motors (-100% to 100%): </label>
+            <input class="slider" type="range" id="slider2" min="-100" max="100" value="0" style="width: 20rem;">
+            <span id="slider2-value">0%</span><br>
+        </div>
+    </div> 
 </body>
 <script>
     const WEBSOCKET_ADDR = "ws://raspberrypi:8080";
@@ -78,7 +91,7 @@
         const rightStickX = gamepad.axes[2];
         const rightStickY = gamepad.axes[3];
         
-        setSteering(leftStickX * 20.0);
+        setSteering(leftStickX * 30.0);
         setMotors((rightTrigger - leftTrigger) * 100.0);
         //console.log("LStick: (" + leftStickX.toFixed(2) + ", " + leftStickY.toFixed(2) + "),\nRStick: (" + rightStickX.toFixed(2) + ", " + rightStickY.toFixed(2) + "),\nLTrigger: " + leftTrigger.toFixed(2) + ", RTrigger: " + rightTrigger.toFixed(2))
     }
