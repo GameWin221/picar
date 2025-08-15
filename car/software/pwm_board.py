@@ -23,6 +23,7 @@ class mAntPWMBoard:
         self.bus = smbus2.SMBus(bus)
 
     # Channel 1 and 2 share a common frequency. Same goes for channels 3 and 4.
+    # This means when you set freq. for channel 1 it also applies the change to channel 2 - same goes for 3 and 4.
     def set_ch_frequency(self, channel: int, frequency: int):
         if channel > 4 or channel < 1:
             print(f"Failed to set frequency - Only channels [1, 2, 3, 4] are supported!")

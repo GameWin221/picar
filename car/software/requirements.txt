@@ -1,0 +1,5 @@
+websockets==15.0.1
+smbus2==0.4.2
+gpiod==2.3.0
+numpy==2.2.4
+picamera==0.3.25
