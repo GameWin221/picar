@@ -160,6 +160,8 @@ int main(void) {
     // Thanks to Jim Merkle's code for those two lines above ^^: https://github.com/JimMerkle/CH32V003_I2C_Slave/blob/master/User/main.c
     // TODO: Try to get rid of those lines because they theoretically shouldn't be necassary but they are needed for I2C to work properly on my board. 
 
+    Delay_Ms(5);
+
     uint8_t control_mode = 0;
     uint8_t target_channel = 0;
     uint8_t value_nth_byte = 0;
@@ -176,14 +178,17 @@ int main(void) {
         temp = I2C1->STAR2;
 
         /// Possible control options:
-        // Set PWM frequency per timer (two channels together)
-        // Set PWM duty cycle per channel.
+        // - Set PWM frequency per timer (two channels together)
+        // - Set PWM duty cycle per channel.
         /// Setting duty cycle to 0 is equal to disabling the channel. All channels start at 0 by default.
 
-        /// Motor control protocol
-        // data[0] is composed of low nibble represeting the control mode (CONTROL_MODE_FREQ or CONTROL_MODE_DUTY) and a high nibble representing the channel (1, 2, 3 or 4)
-        // data[1] is the low byte of the 16 bit value
-        // data[2] is the high byte of the 16 bit value
+        /// Motor control I2C packet:
+        // - 1st byte (register) is composed of high nibble representing the channel (1, 2, 3 or 4) and a low nibble represeting the control mode (CONTROL_MODE_FREQ or CONTROL_MODE_DUTY)
+        // - 2nd byte is the low byte of the 16 bit value
+        // - 3rd byte is the high byte of the 16 bit value
+
+        /// Take a look at pwm_board.py in the car's software to see the other side of the communication.
+
         /// The 16 bit value is:
         // - the PWM frequency in Hz if control mode is CONTROL_MODE_FREQ
         // - the PWM duty cycle that falls in the range [0; PWM_PERIOD] if control mode is CONTROL_MODE_DUTY

@@ -33,9 +33,7 @@ class mAntPWMBoard:
             print(f"PWM frequency must be within the [1; {self.PWM_MAX_FREQ}] range!")
             return
             
-        self.bus.write_byte(self.address, (channel << 4) | CONTROL_MODE_FREQ)
-        self.bus.write_byte(self.address, (frequency & 0xFF))
-        self.bus.write_byte(self.address, ((frequency >> 8) & 0xFF))
+        self.bus.write_word_data(self.address, (channel << 4) | CONTROL_MODE_FREQ, frequency) # 1st byte as register, 2 next bytes as a little-endian word
         
     def set_ch_duty_cycle(self, channel: int, duty_cycle: int):
         if channel > 4 or channel < 1:
@@ -46,9 +44,5 @@ class mAntPWMBoard:
             print(f"PWM duty cycle must be within the [0; {self.PWM_MAX_DUTY}] range!")
             return
         
-        self.bus.write_byte(self.address, (channel << 4) | CONTROL_MODE_DUTY)
-        self.bus.write_byte(self.address, (duty_cycle & 0xFF))
-        self.bus.write_byte(self.address, ((duty_cycle >> 8) & 0xFF))
-        
-
+        self.bus.write_word_data(self.address, (channel << 4) | CONTROL_MODE_DUTY, duty_cycle) # 1st byte as register, 2 next bytes as a little-endian word
     
