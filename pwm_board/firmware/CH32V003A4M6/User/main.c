@@ -23,6 +23,9 @@
 
 #define I2C_RX_ADDR (0x17<<1) // the real address is still 0x17 because of internal shifting - i.e. master still sends to slave on 0x17
 
+#define LNIBBLE(x) ((x) & 0b1111)
+#define HNIBBLE(x) (((x) >> 4) & 0b1111)
+
 void IIC_Init(u32 bound, u16 address){
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
 
@@ -198,9 +201,9 @@ int main(void) {
             if (I2C_GetFlagStatus(I2C1, I2C_FLAG_RXNE) != RESET) {
                 uint8_t data = I2C_ReceiveData(I2C1);
 
-                if (((data & 0b1111) == CONTROL_MODE_DUTY || (data & 0b1111) == CONTROL_MODE_FREQ) && control_mode == 0) {
-                    control_mode = (data & 0b1111);
-                    target_channel = ((data >> 4) & 0b1111);
+                if ((LNIBBLE(data) == CONTROL_MODE_DUTY || LNIBBLE(data) == CONTROL_MODE_FREQ) && control_mode == 0) {
+                    control_mode = LNIBBLE(data);
+                    target_channel = HNIBBLE(data);
                 } else {
                     read_value |= ((uint16_t)data << (8 * value_nth_byte));
                     value_nth_byte++;

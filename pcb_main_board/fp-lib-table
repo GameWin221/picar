@@ -1,0 +1,10 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "LM2596S")(type "KiCad")(uri "${KIPRJMOD}/external/Mouser/LIB_LM2596S-ADJ_NOPB/LM2596S-ADJ_NOPB/KiCad")(options "")(descr ""))
+  (lib (name "TB6612")(type "KiCad")(uri "${KIPRJMOD}/external/Mouser/LIB_TB6612FNG,C,8,EL/TB6612FNG,C,8,EL/KiCad")(options "")(descr ""))
+  (lib (name "SK56A")(type "KiCad")(uri "${KIPRJMOD}/external/Mouser/LIB_SK56A-LTP/SK56A-LTP/KiCad")(options "")(descr ""))
+  (lib (name "CH32V003")(type "KiCad")(uri "${KIPRJMOD}/external/CH32V003")(options "")(descr ""))
+  (lib (name "MP2338")(type "KiCad")(uri "${KIPRJMOD}/external/Mouser/LIB_MP2338GTL-Z/MP2338GTL-Z/KiCad")(options "")(descr ""))
+  (lib (name "SMBJ15A")(type "KiCad")(uri "${KIPRJMOD}/external/Mouser/LIB_SMBJ15A/SMBJ15A/KiCad")(options "")(descr ""))
+  (lib (name "CustomIcon")(type "KiCad")(uri "${KIPRJMOD}/external/CustomIcon.pretty")(options "")(descr ""))
+)

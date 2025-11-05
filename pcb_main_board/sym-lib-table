@@ -1,0 +1,6 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "SK56A-LTP")(type "KiCad")(uri "${KIPRJMOD}/external/Mouser/LIB_SK56A-LTP/SK56A-LTP/KiCad/SK56A-LTP.kicad_sym")(options "")(descr ""))
+  (lib (name "MP2338GTL-Z")(type "KiCad")(uri "${KIPRJMOD}/external/Mouser/LIB_MP2338GTL-Z/MP2338GTL-Z/KiCad/MP2338GTL-Z.kicad_sym")(options "")(descr ""))
+  (lib (name "SMBJ15A")(type "KiCad")(uri "${KIPRJMOD}/external/Mouser/LIB_SMBJ15A/SMBJ15A/KiCad/SMBJ15A.kicad_sym")(options "")(descr ""))
+)

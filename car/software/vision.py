@@ -5,9 +5,14 @@ import picamera2
 from picamera2 import Picamera2
 from libcamera import Transform
 
-camera = Picamera2()
-camera.configure(camera.create_preview_configuration(main={"format": 'RGB888', "size": (1280, 720)}, transform=Transform(hflip=1, vflip=1)))
-camera.start()
+camera = None
+
+def init_camera():
+    global camera
+    
+    camera = Picamera2()
+    camera.configure(camera.create_preview_configuration(main={"format": 'RGB888', "size": (1280, 720)}, transform=Transform(hflip=1, vflip=1)))
+    camera.start()
 
 def _locate_marker_on_img(src: cv.Mat):
     lab_frame = cv.cvtColor(src, cv.COLOR_BGR2LAB)
@@ -162,6 +167,10 @@ def _locate_color_marker_on_img(src: cv.Mat):
     return None
 
 def locate_marker():
+    if camera is None:
+        print("Call init_camera() before trying to use the camera!")
+        return None
+    
     frame = camera.capture_array()
     return _locate_color_marker_on_img(frame)
 

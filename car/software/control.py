@@ -69,7 +69,7 @@ def steer(angle: float):
     angle = max(-MAX_STEER_ANGLE, min(MAX_STEER_ANGLE, angle))
     
     val = mAntPWMBoard.PWM_MAX_DUTY * servo_val(90.0+angle) / (1000.0/50.0) #20ms
-    print(int(val))
+
     pwm.set_ch_duty_cycle(1, int(val))
     
 def drive(val: float):
