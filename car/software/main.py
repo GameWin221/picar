@@ -1,16 +1,24 @@
 import sys, traceback
-import socket
 import time
-import io
 import asyncio
 from websockets.asyncio.server import serve
 import math
 import control
 import vision
+import threading
+import http.server
 
 async def main_remote_control():
-    controlloop = asyncio.create_task(control.control_loop())
+    def run_http_server():
+        server = http.server.HTTPServer(('0.0.0.0', 8000), http.server.SimpleHTTPRequestHandler)
+        server.serve_forever()
     
+    http_thread = threading.Thread(target=run_http_server, daemon=True)
+    http_thread.start()
+    
+    control.start()
+    controlloop = asyncio.create_task(control.control_loop())
+
     async def serve_callback(websocket):
         async for message in websocket:
             parts = message.split()
@@ -18,11 +26,14 @@ async def main_remote_control():
                 control.set_steer_target(float(parts[1]))
             elif parts[0] == "motors":
                 control.set_drive_target(float(parts[1]))
+            elif parts[0] == "motorfreq":
+                control.pcb.set_timer_frequency(control.pcb.PWM_MOTOR_TIMER, int(parts[1]))
+                
             print(parts)
     
     async with serve(serve_callback, "0.0.0.0", 8080) as server:
         await server.serve_forever()
-        
+    
     await controlloop
 
 def main_vision():
@@ -63,7 +74,6 @@ if __name__ == "__main__":
                 main_test()
             case _:
                 print("Running the \"Remote Control\" main loop")
-                control.start()
                 asyncio.run(main_remote_control())
  
     except KeyboardInterrupt:

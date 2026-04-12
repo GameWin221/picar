@@ -5,7 +5,7 @@
 			"type": "mrs-debugger",
 			"request": "launch",
 			"name": "CH32V003A4M6",
-			"cwd": "c:\\Dev\\Projects\\picar\\pwm_board\\firmware\\CH32V003A4M6",
+			"cwd": "c:\\Dev\\Projects\\picar\\pcb_main_board\\firmware\\CH32V003A4M6",
 			"openOCDCfg": {
 				"useLocalOpenOCD": true,
 				"executable": "c:/Dev/Tools/MounRiverStudioII/MounRiver_Studio2/resources/app/resources/win32/components/WCH/OpenOCD/OpenOCD/bin/openocd.exe",
@@ -39,8 +39,8 @@
 					"additionalCommands": []
 				},
 				"loadedFiles": {
-					"executableFile": "c:\\Dev\\Projects\\picar\\pwm_board\\firmware\\CH32V003A4M6\\obj\\CH32V003A4M6.elf",
-					"symbolFile": "c:\\Dev\\Projects\\picar\\pwm_board\\firmware\\CH32V003A4M6\\obj\\CH32V003A4M6.elf",
+					"executableFile": "c:\\Dev\\Projects\\picar\\pcb_main_board\\firmware\\CH32V003A4M6\\obj\\CH32V003A4M6.elf",
+					"symbolFile": "c:\\Dev\\Projects\\picar\\pcb_main_board\\firmware\\CH32V003A4M6\\obj\\CH32V003A4M6.elf",
 					"executableFileOffset": 0,
 					"symbolFileOffset": 0
 				},

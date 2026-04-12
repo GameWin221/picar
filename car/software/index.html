@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="camera-container">
-        <iframe id="camera-feed" src="" scrolling="no" style="width: 1280px; height: 720px;"></iframe>
+        <iframe id="camera-feed" src="" scrolling="no" style="width: 100vw; height: 65vh;"></iframe>
     </div>
     <div class="controller">
         <div class="slider-container">
@@ -20,18 +20,22 @@
             <span id="slider1-value">0deg</span><br>
         </div>
 
-        <div class="spacer"></div>
-
         <div class="slider-container">
             <label for="slider2">Motors (-100% to 100%): </label>
             <input class="slider" type="range" id="slider2" min="-100" max="100" value="0" style="width: 20rem;">
             <span id="slider2-value">0%</span><br>
         </div>
+
+        <div class="slider-container">
+            <label for="slider3">Motor PWM Frequency (1000 - 20000): </label>
+            <input class="slider" type="range" id="slider3" min="1000" max="20000" value="12000" style="width: 20rem;">
+            <span id="slider3-value">12000</span><br>
+        </div>
     </div> 
 </body>
 <script>
-    const WEBSOCKET_ADDR = "ws://raspberrypi:8080";
-    const WEBRTC_CAMERA_ADDR = "http://raspberrypi:8889/rpi";
+    const WEBSOCKET_ADDR = "ws://" + window.location.hostname + ":8080";
+    const WEBRTC_CAMERA_ADDR = "http://" + window.location.hostname + ":8889/rpi";
 
     const socket = new WebSocket(WEBSOCKET_ADDR);
 
@@ -43,6 +47,9 @@
 
     const slider2 = document.getElementById("slider2");
     const slider2Value = document.getElementById("slider2-value");
+
+    const slider3 = document.getElementById("slider3");
+    const slider3Value = document.getElementById("slider3-value");
 
     const cameraFeed = document.getElementById("camera-feed");
 
@@ -62,12 +69,20 @@
         socket.send("motors " + slider2.value);
     }
 
+    function setMotorPWMFrequency(value) {
+        if (!isConnected) return;
+
+        slider3.value = value;
+        slider3Value.textContent = slider3.value;
+        socket.send("motorfreq " + slider3.value);
+    }
+
     function setIsConnected(value) {
         isConnected = value;
 
         slider1.disabled = !isConnected;
         slider2.disabled = !isConnected;
-
+        slider3.disabled = !isConnected;
         if (isConnected) {
             cameraFeed.src = WEBRTC_CAMERA_ADDR;
         } else {
@@ -104,6 +119,10 @@
 
     slider2.addEventListener("input", function() {
         setMotors(slider2.value);
+    });
+
+    slider3.addEventListener("input", function() {
+        setMotorPWMFrequency(slider3.value);
     });
 
     socket.addEventListener("open", (event) => {
