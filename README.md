@@ -92,7 +92,7 @@ When the marker is found, the vehicle drives forward and turns so that the cente
 
 ### Future Vision Enhancement
 
-I plan to use the computer vision model **DepthAnythingV2**, which estimates depth using a single camera combined with a ToF sensor. This combination will allow me to acquire approximate (yet sufficiently accurate) distance information of everything visible on the front camera. This data will enable shape detection by contours and autonomous obstacle avoidance.
+I plan to use a ToF distance sensor in tandem with the computer vision model **DepthAnythingV2**, which estimates depth using a single camera. This combination will allow me to acquire approximate (yet sufficiently accurate) distance information of everything visible in the front camera. This data will enable shape detection by contours and autonomous obstacle avoidance.
 
 ## Firmware
 
