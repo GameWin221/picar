@@ -1,5 +1,5 @@
 # picar
-Car with autonomous and remote-controlled capabilities controlled by Raspberry Pi 5. Features a custom made mainboard PCB responsible for controlling motors, servos and delivering power to the RPi 5.
+Car with autonomous and remote-controlled capabilities controlled by Raspberry Pi 5 and a CH32V003 microcontroller. Features a custom made mainboard PCB responsible for controlling motors, servos and delivering power to the RPi 5.
 
 It is capable of real-time remote control with a gamepad (e.g. XBox One gamepad) alongside a live WebRTC stream from its camera.
 Moreover, simple autonomous driving is possible by following an RGB tracking marker.
