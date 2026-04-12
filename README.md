@@ -27,7 +27,7 @@ Moreover, simple autonomous driving is possible by following an RGB tracking mar
 - M3 screws used for assembling the frame and wheels together
 
 ## PCB mainboard
-![schematic](/pcb_main_board/pcb_main_board_schematic.svg)
+![schematic](/pcb_main_board/design/pcb_main_board_schematic.svg)
 
 */pcb_main_board/pcb_main_board_schematic.svg*
 
