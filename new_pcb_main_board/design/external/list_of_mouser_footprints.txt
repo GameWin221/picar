@@ -1,0 +1,7 @@
+Due to Mouser's license I cannot distribute the footprints but I can provide the download links:
+
+LM2596S-ADJ/NOPB: https://eu.mouser.com/ProductDetail/Texas-Instruments/LM2596S-ADJ-NOPB?qs=X1J7HmVL2ZHoMN0DLDcNog%3D%3D
+MP2338GTL-Z: https://eu.mouser.com/ProductDetail/Monolithic-Power-Systems-MPS/MP2338GTL-Z?qs=Li%252BoUPsLEnuizxbD7Jo%252B7w%3D%3D
+SK56A-LTP: https://eu.mouser.com/ProductDetail/Micro-Commercial-Components-MCC/SK56A-LTP?qs=cLwp4wpikzCfCSxBVWaruQ%3D%3D
+SMBJ15A: https://eu.mouser.com/ProductDetail/Vishay-General-Semiconductor/SMBJ15A?qs=%252BA9HMDDz5KavBY56EO7ceQ%3D%3D
+TB6612FNG,C,8,EL: https://eu.mouser.com/ProductDetail/Toshiba/TB6612FNGC8EL?qs=rsevcuukUAy2UalRuv4E%2FQ%3D%3D
